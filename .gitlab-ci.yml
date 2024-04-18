@@ -1,0 +1,33 @@
+stages:
+  - test
+  - build
+  - deploy
+
+test_job:
+  stage: test
+  image: python:3.10
+  script:
+    - python --version
+    - pip --version
+    - pip install pytest
+    - pytest --version
+    - echo "Running Tests"
+
+build_image_job:
+  stage: build
+  image: docker:19.03.12
+  services:
+    - docker:dind
+  script:
+    - echo "Building Docker image"
+    - docker build -t your_image_name:latest .
+    - echo "Pushing Docker image"
+    - echo "sucessfull pushing Docker image"
+    
+
+deploy_job:
+  stage: deploy
+  script:
+    - echo "Deploying"
+    # Add your deployment commands here
+
