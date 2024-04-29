@@ -13,16 +13,28 @@ test_job:
     - pytest --version
     - echo "Running Tests"
 
+variables:
+  AWS_ACCESS_KEY_ID: "$AKIATCKASVOQWMZMULUI"
+
+
 build_image_job:
   stage: build
   image: docker:19.03.12
   services:
     - docker:dind
+  before_script:
+    - apt-get update -y && apt-get install -y awscli
+
   script:
     - echo "Building Docker image"
     - docker build -t your_image_name:latest .
     - echo "Pushing Docker image"
-    - echo "sucessfull pushing Docker image"
+    - echo "successful pushing Docker image"
+  artifacts:
+  script:
+    - echo uploading artifacts
+  
+
     
 
 deploy_job:
